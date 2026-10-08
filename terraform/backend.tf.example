@@ -1,0 +1,12 @@
+# After the bootstrap state bucket is created, copy/adjust this as backend.tf.
+# Keep backend.tf out of Git if it contains environment-specific details.
+
+# terraform {
+#   backend "s3" {
+#     bucket       = "REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+#     key          = "aegisops/dev/terraform.tfstate"
+#     region       = "ap-south-1"
+#     use_lockfile = true
+#     encrypt      = true
+#   }
+# }

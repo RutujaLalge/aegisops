@@ -1,0 +1,23 @@
+[
+  {
+    "id": "eval-001",
+    "service": "payment-service",
+    "symptoms": [
+      "HTTP 500 increased",
+      "database connection timeout",
+      "pod restarts increased"
+    ],
+    "expectedCause": "Database connection saturation",
+    "expectedRunbook": "database-timeout.md"
+  },
+  {
+    "id": "eval-002",
+    "service": "order-service",
+    "symptoms": [
+      "CPU remained above threshold",
+      "latency increased after deployment"
+    ],
+    "expectedCause": "Release-related CPU regression",
+    "expectedRunbook": "high-cpu.md"
+  }
+]

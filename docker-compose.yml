@@ -1,0 +1,21 @@
+services:
+  api:
+    build: ./services/api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+
+  incident-engine:
+    build: ./services/incident-engine
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: "3001"
+
+  remediation-service:
+    build: ./services/remediation-service
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: "3002"

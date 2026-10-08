@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegisops-remediation-service
+  namespace: aegisops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aegisops-remediation-service
+  template:
+    metadata:
+      labels:
+        app: aegisops-remediation-service
+    spec:
+      serviceAccountName: aegisops-remediation
+      containers:
+        - name: remediation-service
+          image: REPLACE_WITH_ECR/aegisops-remediation-service:latest
+          ports:
+            - containerPort: 3002
+          env:
+            - name: PORT
+              value: "3002"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3002
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3002
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aegisops-remediation-service
+  namespace: aegisops
+spec:
+  selector:
+    app: aegisops-remediation-service
+  ports:
+    - port: 80
+      targetPort: 3002

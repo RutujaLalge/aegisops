@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aegisops-incident-engine
+  namespace: aegisops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aegisops-incident-engine
+  template:
+    metadata:
+      labels:
+        app: aegisops-incident-engine
+    spec:
+      serviceAccountName: aegisops-incident-engine
+      containers:
+        - name: incident-engine
+          image: REPLACE_WITH_ECR/aegisops-incident-engine:latest
+          ports:
+            - containerPort: 3001
+          env:
+            - name: PORT
+              value: "3001"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3001
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3001
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aegisops-incident-engine
+  namespace: aegisops
+spec:
+  selector:
+    app: aegisops-incident-engine
+  ports:
+    - port: 80
+      targetPort: 3001
