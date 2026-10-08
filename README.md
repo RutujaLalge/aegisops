@@ -5,7 +5,7 @@ GitHub Actions, Amazon Bedrock RAG, observability, security, and controlled AI-a
 
 ## Architecture
 
-Developer → GitHub Actions → ECR → EKS
+Developer -> GitHub Actions → ECR → EKS
                          ↓
                  AegisOps API (Node.js/TypeScript)
                          ↓
